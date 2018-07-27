@@ -115,7 +115,7 @@ angular
               if (inIdMode) {
                 derivedOpts.initSelection = function (e, callback) {
 
-                  if (!ngModel.$modelValue) {
+                  if (!ngModel.$modelValue && ngModel.$modelValue !== 0) {
                     return;
                   }
 
@@ -215,9 +215,12 @@ angular
           //programmatic changes to the model
           ngModel.$render = function () {
 
-            if (!ngModel.$modelValue) {
+            if (!ngModel.$modelValue && ngModel.$modelValue !== 0) {
               element.select2('val', "");
               return;
+            } else if (ngModel.$modelValue === 0) {
+                element.select2('val', 0);
+                return;
             }
 
             if (inIdMode) {
@@ -236,7 +239,7 @@ angular
 
               var ngValue = null;
 
-              if (!select2Data) {
+              if (!select2Data && select2Data !== 0) {
                 ngValue = null;
               } else if (inObjectMode) {
                 ngValue = select2Data;
